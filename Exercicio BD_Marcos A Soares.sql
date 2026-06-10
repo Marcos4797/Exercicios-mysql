@@ -27,15 +27,15 @@ select last_name, job_id, commission_pct, salary*12*commission_pct as comissáo
 FROM employees;
 -- exercicio 10 --
 select last_name AS "Sobrenome", salary AS "Salario mensal", salary*12 as "Salario anual"
-FROM employees;
+FROM employees;	
 -- exercicio 11 --
-select concat(first_name,' ', last_name,' (E-mail: ', email, ')')
-FROM employees;
+select concat(first_name,' ', last_name,' (E-mail: ', email, ')') AS Identificação
+FROM employees; 
 -- exercicio 12 --
 select concat(last_name,' Trabalha no cargo ', job_id, ' e ganha R$', salary, ' por mês') as "Apresentação do Funcionário"
 FROM employees;
 -- exercicio 13 --
-select concat(Job_title,': de R$', min_salary, ' até  R$ ', max_salary)
+select concat(Job_title,': de R$', min_salary, ' até  R$ ', max_salary) AS "Faixa Salarial"
 FROM JOBS;
 -- exercicio 14 --
 select distinct department_id
@@ -48,7 +48,7 @@ select distinct department_id ,  job_id
 FROM employees;
 -- exercicio 17 --
 select concat(last_name, ' ', first_name) as "Funcionário",
-job_id as "Cargo",
+ job_id as "Cargo",
  salary as "Salario Mensal",
  salary * 12 as "Salario Anual", 
  salary * 12 * commission_pct as "Comissão Anual",
