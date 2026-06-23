@@ -33,14 +33,14 @@ ADD telefone VARCHAR(15);
  
  -- Q08 
  DROP TABLE equipamentos;
- 
+ -- parte 3
  -- Q09
  INSERT INTO alunos
 		(nome, email, data_matricula, data_nascimento, plano_id, ativo)
   VALUES 
 		('Mariana Rocha', 'mariana.r@email.com', '2026-06-22', '1995-06-15', 2, true);
  
- -- Q 10
+ -- Q10
 UPDATE instrutores
 SET salario = salario * 1.08
 WHERE salario < 3700.00;
@@ -59,6 +59,7 @@ WHERE aluno_id = 4;
 COMMIT;
 ROLLBACK;
 
+-- parte 4
 -- Q12
 SELECT nome, email, data_matricula
 FROM alunos
@@ -82,6 +83,7 @@ FROM alunos
 WHERE nome like 'A%'
 OR nome LIKE '%Souza%';
 
+-- parte 5
 -- Q16
 SELECT alunos.nome, planos.nome
 FROM alunos
@@ -95,3 +97,53 @@ ON aulas.instrutor_id = instrutores.id
 ORDER BY aulas.nome ASC;
 
 -- Q18
+SELECT 
+    al.nome 			AS 'Nome_Aluno',
+    au.nome				AS 'Nome_Aula',
+    inst.nome			AS 'Nome_instrutor'
+FROM inscricoes i
+JOIN alunos al ON i.aluno_id = al.id
+JOIN aulas au ON i.aula_id = au.id
+JOIN instrutores inst ON au.instrutor_id = inst.id
+WHERE i.status = 'ativa'
+ORDER BY al.nome;
+
+-- parte 6  ---  "FINALIZADO EM CASA" ---
+-- 	Q19
+SELECT p.nome, COUNT(a.id)
+FROM planos p
+JOIN alunos a ON a.plano_id = p.id
+GROUP BY p.nome
+ORDER BY COUNT(a.id) DESC;
+
+-- Q20
+SELECT especialidade, ROUND(AVG(salario),2)  AS Media
+FROM instrutores
+GROUP BY especialidade
+ORDER BY Media DESC;
+
+-- Q21
+SELECT a.nome, COUNT(i.id)  AS inscricao_total
+FROM aulas a
+JOIN inscricoes i ON i.aula_id = a.id
+WHERE i.status = 'Ativa'
+GROUP BY a.nome
+HAVING COUNT(i.id) > 2
+ORDER BY inscricao_total DESC;
+
+-- parte 7
+-- Q22
+SELECT a.nome, p.valor_mensal
+FROM alunos a
+JOIN planos p ON a.plano_id = p.id
+WHERE p.valor_mensal > (SELECT AVG(valor_mensal) FROM planos) 
+ORDER BY a.nome ASC;
+
+-- Q23
+SELECT i.nome
+FROM instrutores i
+WHERE i.id NOT IN (select distinct instrutor_id 
+    FROM aulas 
+    WHERE instrutor_id IS NOT NULL
+)
+ORDER BY i.nome ASC;
